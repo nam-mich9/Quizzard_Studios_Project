@@ -18,20 +18,25 @@ void HighScore<T>:: add_score(T x){
 		num++;
 	}
 	else if (num<5){
-	cout<<"numless5"<<endl;
+		int count = 0;
                 for(int i=0; i<num; i++){
-		cout<<"forloop"<<endl;
+		cout<<i<<endl;
                         if (score_array[i]<x){
 			cout<<"if"<<endl; 
-                                score_array[i] = x;
+                                for (int j=num-1; j==i; j--){
+					score_array[j+1] = score_array[j];
+				}
+				score_array[i] = x;
 				break;
 			}
-			else{
-			cout<<"else"<<endl;
-				score_array[num] = x;
-			}
+			count++;
+		}
+		if (count==num){
+		cout<<"count"<<endl;
+			score_array[num] = x;
 		}
 		num++;
+		cout<< num<< endl;
 	}		
 	else if(num==5) {
 		for(int i=0; i<num; i++){
