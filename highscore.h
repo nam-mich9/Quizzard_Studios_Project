@@ -5,31 +5,36 @@ using namespace std;
 template<typename T>
 class HighScore{
 	public:
-		int num;
+		int num=0;
 		int score_array[5];
 		void add_score(T x);
 		void display_score();
 };
 
 template<typename T>
-HighScore<T>::void add_score(T x){
+void HighScore<T>:: add_score(T x){
 	if (num == 0){
 		score_array[num] = x;
-		num++
+		num++;
 	}
 	else if (num<5){
-                for(i=0; i<num; i++){
-                        if (score_array[i]<x){ 
+	cout<<"numless5"<<endl;
+                for(int i=0; i<num; i++){
+		cout<<"forloop"<<endl;
+                        if (score_array[i]<x){
+			cout<<"if"<<endl; 
                                 score_array[i] = x;
+				break;
 			}
 			else{
-				num++
-				score_array[num-1] = x;
+			cout<<"else"<<endl;
+				score_array[num] = x;
 			}
 		}
+		num++;
 	}		
 	else if(num==5) {
-		for(i=0; i<num; i++){
+		for(int i=0; i<num; i++){
 			if (score_array[i]<x){
 				score_array[i] = x;
 			}
@@ -39,8 +44,8 @@ HighScore<T>::void add_score(T x){
 }
 
 template<typename T>
-HighScore<T>::void display_score(){
-	for(i=0; i<num; i++){
+void HighScore<T>:: display_score(){
+	for(int i=0; i<num; i++){
 		cout<<score_array[i]<<endl;
 	}
 }
