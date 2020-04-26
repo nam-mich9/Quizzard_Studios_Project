@@ -23,5 +23,6 @@
     <string name="select_a_catagory">Select a Catagory:</string>
     <string name="stats">Stats</string>
     <string name="todo">TODO</string>
+    <string name="remember_shake_to_pass_on_a_question">Remember: Shake to pass on a question!</string>
 
 </resources>

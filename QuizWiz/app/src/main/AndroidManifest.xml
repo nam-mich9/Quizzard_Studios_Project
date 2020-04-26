@@ -18,7 +18,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".Quizmain" />
+        <activity android:name=".Quizmain"
+            android:noHistory="true" />
         <activity
             android:name=".Difficulty"
             android:parentActivityName=".MainActivity">

@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.BreakIterator;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
@@ -21,32 +23,77 @@ public class Quizmain extends AppCompatActivity {
     int found,found1,found2,found3, found_quote,found_quote1,found_quote2,found_quote3, find_end_of_ques;
     String ans,ans1,ans2,ans3, final_ans, sentence,sentence1, sentence2,sentence3, quest, player_choice;
     String incorrect1,incorrect2,incorrect3;
-    int lives = 3;
+    int lives, passes;
     int score = 0;
     static int new_score;
+
+    //this integer array is used to randomize the button ids so the answers can be displayed randomly
     Integer[] a =  { R.id.button7, R.id.button8, R.id.button11, R.id.button12};
 
     Button tv1, tv2,tv3,tv4;
 
+    //this gets the time set from the difficulty slection
+    int newtime = Difficulty.time_value;
 
+    @Override
+    public void onBackPressed() {
+// super.onBackPressed();
+// Not calling **super**, disables back button in current screen.
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quizmain);
 
+        //sets lives and passes
+        lives = 3;
+        passes = 3;
+
+        //this is the timer function
+        final CountDownTimer countDownTimer = new CountDownTimer( newtime, 1000) {
+            TextView timer = findViewById(R.id.textView7);
+
+            public void onTick(long millisUntilFinished) {
+
+                timer.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                //gets new question and resets timer if you still have lives
+                timeout();
+                cancel();
+                if (lives > 0 ) {
+                    start();
+                }
+
+
+            }
+
+
+        }.start(); //timer starts
+
+
+
+        //displays question, score, lives and passes
         TextView tv = findViewById(R.id.mainquiestion);
         tv.setText(getquestion());
-        String[] b =  { getans(), getincorrect1(), getincorrect2(), getincorrect3()};
+
+        String[] b =  { getans(), getincorrect1(), getincorrect2(), getincorrect3()};// array for randomized answers
         TextView nv = findViewById(R.id.displife);
         nv.setText(life());
 
         TextView nv1 = findViewById(R.id.dispscore);
         nv1.setText(score());
 
-        Collections.shuffle(Arrays.asList(a));
+        TextView nv2 = findViewById(R.id.disppass);
+        nv2.setText(getpass());
 
+        //randomizes button ids
+        Collections.shuffle(Arrays.asList(a));
+        // randomizes answers
         Collections.shuffle(Arrays.asList(b));
 
+        //sets answers and ids
         tv1 = findViewById(a[0]);
         tv1.setText(b[0]);
 
@@ -63,14 +110,33 @@ public class Quizmain extends AppCompatActivity {
         tv4.setText(b[3]);
 
 
+
+        /* these are on click listeners that retrieve new questions and answers and
+        randomize them again so the correct answer doesn't stay in the same place,
+        as well as checks answers and resets timers
+         */
+
+
         tv1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                /*this if statement increments the score if the selected answer equals the correct answer
+                 and decrease your lives if it doesn't
+                 */
                 if(tv1.getText() == getans()) {
                     scoreplus();
                 }else{
+
                     lifeminus();
                 }
+
+                //this stops the timer and resets it if you still have lives
+                countDownTimer.cancel();
+                if (lives > 0 ) {
+                    countDownTimer.start();
+                }
+
+
+
 
                 TextView nv = findViewById(R.id.displife);
                 nv.setText(life());
@@ -104,13 +170,23 @@ public class Quizmain extends AppCompatActivity {
         });
 
         tv2.setOnClickListener(new View.OnClickListener() {
+
+
+
             public void onClick(View v) {
 
                 if(tv2.getText() == getans()) {
                     scoreplus();
                 }else{
+
                     lifeminus();
                 }
+                countDownTimer.cancel();
+                if (lives > 0 ) {
+                    countDownTimer.start();
+                }
+
+
 
                 TextView nv = findViewById(R.id.displife);
                 nv.setText(life());
@@ -155,8 +231,15 @@ public class Quizmain extends AppCompatActivity {
                 if(tv3.getText() == getans()) {
                     scoreplus();
                 }else{
+
                     lifeminus();
                 }
+                countDownTimer.cancel();
+
+                if (lives > 0 ) {
+                    countDownTimer.start();
+                }
+
 
                 TextView nv = findViewById(R.id.displife);
                 nv.setText(life());
@@ -200,8 +283,15 @@ public class Quizmain extends AppCompatActivity {
                 if(tv4.getText() == getans()) {
                     scoreplus();
                 }else{
+
                     lifeminus();
                 }
+                countDownTimer.cancel();
+
+                if (lives > 0 ) {
+                    countDownTimer.start();
+                }
+
 
                 TextView nv = findViewById(R.id.displife);
                 nv.setText(life());
@@ -238,24 +328,71 @@ public class Quizmain extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
+
+
+    }
+
+    //this is called upon when the time runs out. it works similarly to the onclick listeners
+    public void timeout(){
+
+        lifeminus();
+
+
+        TextView nv = findViewById(R.id.displife);
+        nv.setText(life());
+
+        TextView nv1 = findViewById(R.id.dispscore);
+        nv1.setText(score());
+
+
+        TextView tv = findViewById(R.id.mainquiestion);
+        tv.setText(getquestion());
+        String[] b =  { getans(), getincorrect1(), getincorrect2(), getincorrect3()};
+
+
+        Collections.shuffle(Arrays.asList(a));
+
+        Collections.shuffle(Arrays.asList(b));
+
+
+        tv1.setText(b[0]);
+
+
+
+        tv2.setText(b[1]);
+
+
+
+        tv3.setText(b[2]);
+
+
+
+        tv4.setText(b[3]);
+
+
     }
 
 
 
 
-
-
-
+/*this is the method that returns the question string and retrives the correct answer from the same
+    string in the sentances vector*/
     public String getquestion() {
+
 
         rand_num = rand.nextInt(MainActivity.sentences.size());
 
         sentence = MainActivity.sentences.get(rand_num);
-        found = sentence.indexOf("\",");
-        ans = sentence.substring(found+4, sentence.length());
+        found = sentence.indexOf("\",");//Find instance of ','
+        ans = sentence.substring(found+4, sentence.length());// Taking subtring from ','+3 to the end
 
-        found_quote = ans.indexOf('\"');
-        final_ans = ans.substring(0,found_quote);
+        found_quote = ans.indexOf('\"'); //Finding next "
+        final_ans = ans.substring(0,found_quote); //Taking a new substring from initial ans to the found_quote
 
         find_colon = sentence.indexOf(':');
         String quest_part = sentence.substring(find_colon+1,sentence.length());
@@ -264,11 +401,12 @@ public class Quizmain extends AppCompatActivity {
 
         return quest;
     }
-
+    //retuns srting value of final answer
     public String getans() {
         return final_ans;
     }
-
+        /*these retrieve the incorrect answers that are put in random buttons
+            they work nearly the same way as the get question function does*/
     public  String getincorrect1(){
 
         rand_num1 = rand.nextInt(MainActivity.sentences.size());
@@ -320,7 +458,7 @@ public class Quizmain extends AppCompatActivity {
 
             }
 
-
+//these increment and decrement the score and life values respectively
     public  void scoreplus(){
 
         ++score;
@@ -332,13 +470,16 @@ public class Quizmain extends AppCompatActivity {
     public void lifeminus(){
 
         --lives;
-        if (lives < 1) {
+        if (lives < 1 ) {
+
             Intent intent = new Intent(this, MainActivity.class);
 
             startActivity(intent);
+
         }
     }
 
+    //these return the life and score values as strings
     public  String life(){
 
        String life = String.valueOf(lives);
@@ -349,7 +490,51 @@ public class Quizmain extends AppCompatActivity {
         return String.valueOf(score);
        
     }
+    public void passminus(){ // this is the method that will decrement the passes and move to the next question. make sure to set it in the "accept" click of the confirmation, not the shake itself.
 
+        --passes;
+        TextView nv = findViewById(R.id.displife);
+        nv.setText(life());
+
+        TextView nv1 = findViewById(R.id.dispscore);
+        nv1.setText(score());
+
+
+        TextView tv = findViewById(R.id.mainquiestion);
+        tv.setText(getquestion());
+        String[] b =  { getans(), getincorrect1(), getincorrect2(), getincorrect3()};
+
+
+        Collections.shuffle(Arrays.asList(a));
+
+        Collections.shuffle(Arrays.asList(b));
+
+
+        tv1.setText(b[0]);
+
+
+
+        tv2.setText(b[1]);
+
+
+
+        tv3.setText(b[2]);
+
+
+
+        tv4.setText(b[3]);
+
+        if (passes < 1 ) {
+
+           //end shake input
+        }
+    }
+    public String getpass(){ // this is sets the passes value to a string
+
+        return ("Passes:  " + passes);
+    }
 }
+
+
 
 
