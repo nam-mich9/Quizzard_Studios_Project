@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -40,16 +41,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         TextView hsc = findViewById(R.id.HS);
         hsc.setText(highscore());
         //Example of a call to a native method
         //TextView tv = findViewById(R.id.action_text);
-       // tv.setText(stringFromJNI());
+        //tv.setText(stringFromJNI());
+
+        /*final Button user = findViewById(R.id.user);
+        user.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                openEditUserQuizzes();
+            }
+        });*/
+
+        final Button customQuizzes = findViewById(R.id.UserCreatedQuizzes);
+        customQuizzes.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                openEditUserQuizzes();
+            }
+        });
     }
 
-
+    public void openEditUserQuizzes()
+    {
+        startActivity(new Intent(this, EditUserQuizzes.class));
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void gotosports(View view) throws IOException {
