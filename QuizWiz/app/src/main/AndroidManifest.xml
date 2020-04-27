@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateQuiz"></activity>
+        <activity android:name=".UserQuizResults"></activity>
+        <activity android:name=".UserQuizMain" />
+        <activity android:name=".UserQuizDifficulty" />
+        <activity android:name=".CreateQuiz" />
         <activity android:name=".EditUserQuizzes" />
         <activity
             android:name=".Stats"
@@ -20,7 +23,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".Quizmain"
+        <activity
+            android:name=".Quizmain"
             android:noHistory="true" />
         <activity
             android:name=".Difficulty"

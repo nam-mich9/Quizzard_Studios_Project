@@ -56,14 +56,6 @@ public class MainActivity extends AppCompatActivity {
         //TextView tv = findViewById(R.id.action_text);
         //tv.setText(stringFromJNI());
 
-        /*final Button user = findViewById(R.id.user);
-        user.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                openEditUserQuizzes();
-            }
-        });*/
-
         final Button customQuizzes = findViewById(R.id.UserCreatedQuizzes);
         customQuizzes.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)

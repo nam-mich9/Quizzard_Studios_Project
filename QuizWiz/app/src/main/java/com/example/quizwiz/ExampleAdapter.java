@@ -67,7 +67,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             startQuizButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v)
                 {
-
+                    startQuiz();
                 }
             });
         }
@@ -76,6 +76,13 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         {
             Intent intent = new Intent(context, CreateQuiz.class);
             intent.putExtra("updateQuiz", true);
+            intent.putExtra("quizIndex", getAdapterPosition());
+            context.startActivity(intent);
+        }
+
+        private void startQuiz()
+        {
+            Intent intent = new Intent(context, UserQuizDifficulty.class);
             intent.putExtra("quizIndex", getAdapterPosition());
             context.startActivity(intent);
         }

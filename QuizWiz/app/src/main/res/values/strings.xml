@@ -28,43 +28,45 @@
 
     <!-- STRINGS FOR "EditUserQuizzes" Activity -->
     <!-- For the Back Button -->
-    <string name = "backButton">Back</string>
+    <string name="backButton">Back</string>
     <!-- For the title of the User Created Quiz activity -->
-    <string name = "EditUserQuizzesTitle">Edit User Quizzes</string>
+    <string name="EditUserQuizzesTitle">Edit User Quizzes</string>
     <!-- For the Create quiz button -->
-    <string name = "CreateQuiz">Create</string>
+    <string name="CreateQuiz">Create</string>
 
     <!-- STRINGS FOR "CreateQuiz" Activity -->
     <!--for the Create button-->
-    <string name = "create">Create</string>
+    <string name="create">Create</string>
     <!--the prompt for the user-created quiz name input box-->
-    <string name = "quizNamePrompt">Name your quiz</string>
+    <string name="quizNamePrompt">Name your quiz</string>
     <!--the prompt for the user-created quiz question input box-->
-    <string name = "questionPrompt">Write the question</string>
+    <string name="questionPrompt">Write the question</string>
     <!--for text box telling user to check which answer is the correct choice-->
-    <string name = "correctChoiceInstruction">Check the answer that is the correct choice.</string>
+    <string name="correctChoiceInstruction">Check the answer that is the correct choice.</string>
     <!--the prompt for the user-created quiz choice 1 input box-->
-    <string name = "answer1">Answer 1</string>
+    <string name="answer1">Answer 1</string>
     <!--the prompt for the user-created quiz choice 2 input box-->
-    <string name = "answer2">Answer 2</string>
+    <string name="answer2">Answer 2</string>
     <!--the prompt for the user-created quiz choice 3 input box-->
-    <string name = "answer3">Answer 3</string>
+    <string name="answer3">Answer 3</string>
     <!--the prompt for the user-created quiz choice 4 input box-->
-    <string name = "answer4">Answer 4</string>
+    <string name="answer4">Answer 4</string>
     <!--for the Add Question button-->
-    <string name = "addQuestion">Add Question</string>
+    <string name="addQuestion">Add Question</string>
     <!--for the Finish Quiz button-->
-    <string name = "finishQuiz">Finish Quiz Creation</string>
+    <string name="finishQuiz">Finish Quiz Creation</string>
     <!--the text to be displayed if question is not properly filled in-->
     <!--><string name = "questionWarning">Please fill in all question fields.</string>-->
     <!--for the Delete Question button-->
-    <string name = "deleteQuestion">Delete Question</string>
+    <string name="deleteQuestion">Delete Question</string>
     <!--for the Previous Question button-->
-    <string name = "previousQuestion">Previous</string>
+    <string name="previousQuestion">Previous</string>
     <!--for the Next Question button-->
-    <string name = "nextQuestion">Next</string>
+    <string name="nextQuestion">Next</string>
     <!--for the Cancel quiz creation button-->
-    <string name = "Cancel">Cancel</string>
+    <string name="Cancel">Cancel</string>
+
+    <string name="remember_shake_to_pass_on_a_question">Remember: Shake to pass on a question</string>
 
 
 </resources>

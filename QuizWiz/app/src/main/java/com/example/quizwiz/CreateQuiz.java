@@ -362,21 +362,21 @@ public class CreateQuiz extends AppCompatActivity {
     //Populates UI elements from a previously created question
     private void fillFieldsFromQuestion(UserQuestion question)
     {
-        questionInput.setText(question.question);
-        answer1Input.setText(question.choice1);
-        answer2Input.setText(question.choice2);
-        answer3Input.setText(question.choice3);
-        answer4Input.setText(question.choice4);
+        questionInput.setText(question.getQuestion());
+        answer1Input.setText(question.getAnswer(1));
+        answer2Input.setText(question.getAnswer(2));
+        answer3Input.setText(question.getAnswer(3));
+        answer4Input.setText(question.getAnswer(4));
 
-        if (question.choice1.equals(question.correctAnswer))
+        if (question.getAnswer(1).equals(question.getCorrectAnswer()))
         {
             answer1Choice.setChecked(true);
         }
-        else if (question.choice2.equals(question.correctAnswer))
+        else if (question.getAnswer(2).equals(question.getCorrectAnswer()))
         {
             answer2Choice.setChecked(true);
         }
-        else if (question.choice3.equals(question.correctAnswer))
+        else if (question.getAnswer(3).equals(question.getCorrectAnswer()))
         {
             answer3Choice.setChecked(true);
         }
