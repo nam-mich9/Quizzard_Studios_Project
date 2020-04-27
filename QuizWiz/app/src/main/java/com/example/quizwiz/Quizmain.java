@@ -3,6 +3,7 @@ package com.example.quizwiz;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.animation.AnimatorSet;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -38,7 +39,7 @@ public class Quizmain extends AppCompatActivity {
 
     Button tv1, tv2,tv3,tv4;
 
-    //this gets the time set from the difficulty slection
+    //this gets the time set from the difficulty selection
     int newtime = Difficulty.time_value;
 
     Dialog confirmationpass;
@@ -50,17 +51,19 @@ public class Quizmain extends AppCompatActivity {
 // super.onBackPressed();
 // Not calling **super**, disables back button in current screen.
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quizmain);
         confirmationpass = new Dialog(this);
 
+        //Sensor for shake
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensorListener = new ShakeEventListener();
-
+        //Waits for a shake
         mSensorListener.setOnShakeListener(new ShakeEventListener.OnShakeListener() {
-
+            //If there is a shake, a pop-up window will come up
             public void onShake() {
                 showdialogbox();
             }
@@ -86,15 +89,11 @@ public class Quizmain extends AppCompatActivity {
                 if (lives > 0 ) {
                     start();
                 }
-
-
             }
-
 
         }.start(); //timer starts
 
-
-
+        countDownTimer.start(); //timer starts
         //displays question, score, lives and passes
         TextView tv = findViewById(R.id.mainquiestion);
         tv.setText(getquestion());
@@ -207,7 +206,6 @@ public class Quizmain extends AppCompatActivity {
                 if (lives > 0 ) {
                     countDownTimer.start();
                 }
-
 
 
                 TextView nv = findViewById(R.id.displife);
@@ -352,9 +350,11 @@ public class Quizmain extends AppCompatActivity {
         });
 
     }
-
+    //Runs the Sensor to wait for a shake
     private SensorManager mSensorManager;
     private ShakeEventListener mSensorListener;
+
+    //Keeps the sensor going or starts it again after pause
     @Override
     protected void onResume() {
         super.onResume();
@@ -362,25 +362,28 @@ public class Quizmain extends AppCompatActivity {
                 mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_UI);
     }
-
+    //Keeps the sensor on pause
     @Override
     protected void onPause() {
         mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
     }
 
+    //Pop up window
     public void showdialogbox(){
         confirmationpass.setContentView(R.layout.dialoguebox);
         closePop = (Button) confirmationpass.findViewById(R.id.closePop);
         passbutton = (Button) confirmationpass.findViewById(R.id.passbutton);
         Passask = (TextView) confirmationpass.findViewById(R.id.Passask);
 
+        //Button to close popup with no pass
         closePop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 confirmationpass.dismiss();
             }
         });
+        //Button to close popup with pass
         passbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -389,56 +392,56 @@ public class Quizmain extends AppCompatActivity {
                 confirmationpass.dismiss();
             }
         });
-
+        //Showing pop up
         confirmationpass.getWindow();
         confirmationpass.show();
     }
 
-    //this is called upon when the time runs out. it works similarly to the onclick listeners
-    public void timeout(){
+   //this is called upon when the time runs out. it works similarly to the onclick listeners
+   public void timeout(){
 
-        lifeminus();
-
-
-        TextView nv = findViewById(R.id.displife);
-        nv.setText(life());
-
-        TextView nv1 = findViewById(R.id.dispscore);
-        nv1.setText(score());
+       lifeminus();
 
 
-        TextView tv = findViewById(R.id.mainquiestion);
-        tv.setText(getquestion());
-        String[] b =  { getans(), getincorrect1(), getincorrect2(), getincorrect3()};
+       TextView nv = findViewById(R.id.displife);
+       nv.setText(life());
+
+       TextView nv1 = findViewById(R.id.dispscore);
+       nv1.setText(score());
 
 
-        Collections.shuffle(Arrays.asList(a));
-
-        Collections.shuffle(Arrays.asList(b));
-
-
-        tv1.setText(b[0]);
+       TextView tv = findViewById(R.id.mainquiestion);
+       tv.setText(getquestion());
+       String[] b =  { getans(), getincorrect1(), getincorrect2(), getincorrect3()};
 
 
+       Collections.shuffle(Arrays.asList(a));
 
-        tv2.setText(b[1]);
+       Collections.shuffle(Arrays.asList(b));
+
+
+       tv1.setText(b[0]);
 
 
 
-        tv3.setText(b[2]);
+       tv2.setText(b[1]);
 
 
 
-        tv4.setText(b[3]);
+       tv3.setText(b[2]);
 
 
-    }
+
+       tv4.setText(b[3]);
+
+
+   }
 
 
 
 
 /*this is the method that returns the question string and retrives the correct answer from the same
-    string in the sentances vector*/
+   string in the sentances vector*/
     public String getquestion() {
 
 
