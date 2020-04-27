@@ -15,6 +15,7 @@ public class Stats extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
+        //these shows the score values form the MainActivity.java in the stats screen
         TextView shs = findViewById(R.id.SHS);
         shs.setText(String.valueOf(MainActivity.sport_score));
 
