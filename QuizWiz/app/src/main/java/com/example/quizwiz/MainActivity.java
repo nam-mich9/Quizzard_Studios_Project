@@ -3,11 +3,17 @@ package com.example.quizwiz;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -44,14 +50,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         //this displays the high score
         TextView hsc = findViewById(R.id.HS);
         hsc.setText(highscore());
-
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void gotosports(View view) throws IOException { // this is triggered by clicking the sports catagory
@@ -133,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public  String highscore(){ //this method sets each score value
-
-
 
         if(high_score < Quizmain.new_score){
             high_score = Quizmain.new_score;

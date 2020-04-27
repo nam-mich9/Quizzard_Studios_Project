@@ -3,12 +3,18 @@ package com.example.quizwiz;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.BreakIterator;
 import java.util.Arrays;
@@ -35,6 +41,10 @@ public class Quizmain extends AppCompatActivity {
     //this gets the time set from the difficulty slection
     int newtime = Difficulty.time_value;
 
+    Dialog confirmationpass;
+    TextView Passask;
+    Button passbutton, closePop;
+
     @Override
     public void onBackPressed() {
 // super.onBackPressed();
@@ -44,6 +54,17 @@ public class Quizmain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quizmain);
+        confirmationpass = new Dialog(this);
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mSensorListener = new ShakeEventListener();
+
+        mSensorListener.setOnShakeListener(new ShakeEventListener.OnShakeListener() {
+
+            public void onShake() {
+                showdialogbox();
+            }
+        });
 
         //sets lives and passes
         lives = 3;
@@ -136,13 +157,14 @@ public class Quizmain extends AppCompatActivity {
                 }
 
 
-
-
                 TextView nv = findViewById(R.id.displife);
                 nv.setText(life());
 
                 TextView nv1 = findViewById(R.id.dispscore);
                 nv1.setText(score());
+
+                TextView nv2 = findViewById(R.id.disppass);
+                nv2.setText(getpass());
 
                 TextView tv = findViewById(R.id.mainquiestion);
                 tv.setText(getquestion());
@@ -329,12 +351,47 @@ public class Quizmain extends AppCompatActivity {
             }
         });
 
+    }
 
+    private SensorManager mSensorManager;
+    private ShakeEventListener mSensorListener;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mSensorListener,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_UI);
+    }
 
+    @Override
+    protected void onPause() {
+        mSensorManager.unregisterListener(mSensorListener);
+        super.onPause();
+    }
 
+    public void showdialogbox(){
+        confirmationpass.setContentView(R.layout.dialoguebox);
+        closePop = (Button) confirmationpass.findViewById(R.id.closePop);
+        passbutton = (Button) confirmationpass.findViewById(R.id.passbutton);
+        Passask = (TextView) confirmationpass.findViewById(R.id.Passask);
 
+        closePop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmationpass.dismiss();
+            }
+        });
+        passbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passminus();
 
+                confirmationpass.dismiss();
+            }
+        });
 
+        confirmationpass.getWindow();
+        confirmationpass.show();
     }
 
     //this is called upon when the time runs out. it works similarly to the onclick listeners
@@ -490,15 +547,17 @@ public class Quizmain extends AppCompatActivity {
         return String.valueOf(score);
        
     }
-    public void passminus(){ // this is the method that will decrement the passes and move to the next question. make sure to set it in the "accept" click of the confirmation, not the shake itself.
-
+    public void passminus(){ // this is the method that will decrement the passes and move to the next question
         --passes;
+
         TextView nv = findViewById(R.id.displife);
         nv.setText(life());
 
         TextView nv1 = findViewById(R.id.dispscore);
         nv1.setText(score());
 
+        TextView nv2 = findViewById(R.id.disppass);
+        nv2.setText(getpass());
 
         TextView tv = findViewById(R.id.mainquiestion);
         tv.setText(getquestion());
@@ -526,8 +585,9 @@ public class Quizmain extends AppCompatActivity {
 
         if (passes < 1 ) {
 
-           //end shake input
+            onPause();
         }
+
     }
     public String getpass(){ // this is sets the passes value to a string
 
