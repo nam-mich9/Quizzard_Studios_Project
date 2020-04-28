@@ -19,6 +19,7 @@
 
 ## Features of your program
 * **How to run**
+![Image of Step 1](https://github.com/nam-mich9/Quizzard_Studios_Project/blob/master/Step%201.png)
 
 
 ## Team Name and Contributors
