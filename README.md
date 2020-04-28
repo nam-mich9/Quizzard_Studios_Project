@@ -1,17 +1,39 @@
 # Quizzard_Studios_Project
 
-**Table of contents**
+## Table of contents
 
-Installation
-Cloning
-Setup 
-Think like someone else in some random OS will try to use your program
-Mention which OS did you build your program (Linux CentOS 4.5, etc.)
-Package, compiler information or any other dependencies (Android Studio, SDK 22.2, QT version 1.1, etc.)
-Basically list everything that can help the user to reproduce your results
-Features of your program
-How to run
-A couple of example commands might be good
-If you have a GUI application, you can add snapshots
-Tests (If you conduct any) - Optional
-Team Name or Contributors
+## Installation
+* **Cloning**
+  * For Terminal:
+  1. git init
+  2. git clone https://github.com/nam-mich9/Quizzard_Studios_Project.git
+  
+  
+  * For Desktop
+  1. Clone or download tab (green top right)
+  2. Open in Desktop
+  3. Pull origin
+
+* **Setup**
+  * Built on macOS Catalina Version 10.15.3
+  * Requires Android Studio, SDK 28, Build tools 29.0.3, Gradle 5.6.4
+
+## Features of your program
+* **How to run**
+ * Step 1:
+![Image of Step 1](https://github.com/nam-mich9/Quizzard_Studios_Project/blob/master/Step%201.png)
+
+ * Step 2:
+![Image of Step 2](https://github.com/nam-mich9/Quizzard_Studios_Project/blob/master/Step%202.png)
+
+
+## Team Name and Contributors
+**Quizzard Studios**
+ * Richard Che
+ * Luiza DaMotta
+ * Guadalupe Garcia
+ * Sean McDonald
+ * Michelle Nam
+  
+
+
