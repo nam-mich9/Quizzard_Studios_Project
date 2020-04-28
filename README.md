@@ -2,10 +2,10 @@
 
 ## Table of contents
  ### Installation
-  #### Cloning
-  #### Set-Up
+  #### * Cloning
+  #### * Set-Up
  ### Features of Program
-  #### How to Run
+  #### * How to Run
  ### Team Name and Contributers
 
 
