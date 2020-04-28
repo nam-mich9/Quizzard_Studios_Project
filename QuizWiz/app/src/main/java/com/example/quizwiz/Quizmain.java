@@ -56,25 +56,16 @@ public class Quizmain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quizmain);
-        confirmationpass = new Dialog(this);
 
-        //Sensor for shake
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mSensorListener = new ShakeEventListener();
-        //Waits for a shake
-        mSensorListener.setOnShakeListener(new ShakeEventListener.OnShakeListener() {
-            //If there is a shake, a pop-up window will come up
-            public void onShake() {
-                showdialogbox();
-            }
-        });
+        confirmationpass = new Dialog(this);
 
         //sets lives and passes
         lives = 3;
         passes = 3;
 
+
         //this is the timer function
-        final CountDownTimer countDownTimer = new CountDownTimer( newtime, 1000) {
+       final CountDownTimer countDownTimer = new CountDownTimer( newtime, 1000) {
             TextView timer = findViewById(R.id.textView7);
 
             public void onTick(long millisUntilFinished) {
@@ -93,7 +84,6 @@ public class Quizmain extends AppCompatActivity {
 
         }.start(); //timer starts
 
-        countDownTimer.start(); //timer starts
         //displays question, score, lives and passes
         TextView tv = findViewById(R.id.mainquiestion);
         tv.setText(getquestion());
@@ -117,14 +107,11 @@ public class Quizmain extends AppCompatActivity {
         tv1 = findViewById(a[0]);
         tv1.setText(b[0]);
 
-
         tv2 = findViewById(a[1]);
         tv2.setText(b[1]);
 
-
         tv3 = findViewById(a[2]);
         tv3.setText(b[2]);
-
 
         tv4 = findViewById(a[3]);
         tv4.setText(b[3]);
@@ -135,8 +122,6 @@ public class Quizmain extends AppCompatActivity {
         randomize them again so the correct answer doesn't stay in the same place,
         as well as checks answers and resets timers
          */
-
-
         tv1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 /*this if statement increments the score if the selected answer equals the correct answer
@@ -151,10 +136,10 @@ public class Quizmain extends AppCompatActivity {
 
                 //this stops the timer and resets it if you still have lives
                 countDownTimer.cancel();
+
                 if (lives > 0 ) {
                     countDownTimer.start();
                 }
-
 
                 TextView nv = findViewById(R.id.displife);
                 nv.setText(life());
@@ -162,38 +147,22 @@ public class Quizmain extends AppCompatActivity {
                 TextView nv1 = findViewById(R.id.dispscore);
                 nv1.setText(score());
 
-                TextView nv2 = findViewById(R.id.disppass);
-                nv2.setText(getpass());
-
                 TextView tv = findViewById(R.id.mainquiestion);
                 tv.setText(getquestion());
                 String[] b =  { getans(), getincorrect1(), getincorrect2(), getincorrect3()};
+
 
                 Collections.shuffle(Arrays.asList(a));
                 Collections.shuffle(Arrays.asList(b));
 
                 tv1.setText(b[0]);
-
-
-
                 tv2.setText(b[1]);
-
-
-
                 tv3.setText(b[2]);
-
-
-
                 tv4.setText(b[3]);
-
-
             }
         });
 
         tv2.setOnClickListener(new View.OnClickListener() {
-
-
-
             public void onClick(View v) {
 
                 if(tv2.getText() == getans()) {
@@ -203,10 +172,10 @@ public class Quizmain extends AppCompatActivity {
                     lifeminus();
                 }
                 countDownTimer.cancel();
+
                 if (lives > 0 ) {
                     countDownTimer.start();
                 }
-
 
                 TextView nv = findViewById(R.id.displife);
                 nv.setText(life());
@@ -214,52 +183,35 @@ public class Quizmain extends AppCompatActivity {
                 TextView nv1 = findViewById(R.id.dispscore);
                 nv1.setText(score());
 
-
                 TextView tv = findViewById(R.id.mainquiestion);
                 tv.setText(getquestion());
                 String[] b =  { getans(), getincorrect1(), getincorrect2(), getincorrect3()};
 
 
                 Collections.shuffle(Arrays.asList(a));
-
-
                 Collections.shuffle(Arrays.asList(b));
 
                 tv1.setText(b[0]);
-
-
-
                 tv2.setText(b[1]);
-
-
-
                 tv3.setText(b[2]);
-
-
-
                 tv4.setText(b[3]);
-
-
-
-
             }
         });
 
         tv3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(tv3.getText() == getans()) {
+                if (tv3.getText() == getans()) {
                     scoreplus();
-                }else{
+                } else {
 
                     lifeminus();
                 }
                 countDownTimer.cancel();
 
-                if (lives > 0 ) {
+                if (lives > 0) {
                     countDownTimer.start();
                 }
-
 
                 TextView nv = findViewById(R.id.displife);
                 nv.setText(life());
@@ -267,33 +219,18 @@ public class Quizmain extends AppCompatActivity {
                 TextView nv1 = findViewById(R.id.dispscore);
                 nv1.setText(score());
 
-
                 TextView tv = findViewById(R.id.mainquiestion);
                 tv.setText(getquestion());
-                String[] b =  { getans(), getincorrect1(), getincorrect2(), getincorrect3()};
+                String[] b = {getans(), getincorrect1(), getincorrect2(), getincorrect3()};
 
 
                 Collections.shuffle(Arrays.asList(a));
-
                 Collections.shuffle(Arrays.asList(b));
 
-
                 tv1.setText(b[0]);
-
-
-
                 tv2.setText(b[1]);
-
-
-
                 tv3.setText(b[2]);
-
-
-
                 tv4.setText(b[3]);
-
-
-
             }
         });
 
@@ -312,13 +249,11 @@ public class Quizmain extends AppCompatActivity {
                     countDownTimer.start();
                 }
 
-
                 TextView nv = findViewById(R.id.displife);
                 nv.setText(life());
 
                 TextView nv1 = findViewById(R.id.dispscore);
                 nv1.setText(score());
-
 
                 TextView tv = findViewById(R.id.mainquiestion);
                 tv.setText(getquestion());
@@ -326,30 +261,56 @@ public class Quizmain extends AppCompatActivity {
 
 
                 Collections.shuffle(Arrays.asList(a));
-
                 Collections.shuffle(Arrays.asList(b));
 
-
                 tv1.setText(b[0]);
-
-
-
                 tv2.setText(b[1]);
-
-
-
                 tv3.setText(b[2]);
-
-
-
                 tv4.setText(b[3]);
-
-
-
             }
         });
 
+
+
+        //Sensor for shake
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mSensorListener = new ShakeEventListener();
+        //Waits for a shake
+        mSensorListener.setOnShakeListener(new ShakeEventListener.OnShakeListener() {
+            //If there is a shake, a pop-up window will come up
+            public void onShake(){
+                confirmationpass.setContentView(R.layout.dialoguebox);
+                closePop = (Button) confirmationpass.findViewById(R.id.closePop);
+                passbutton = (Button) confirmationpass.findViewById(R.id.passbutton);
+                Passask = (TextView) confirmationpass.findViewById(R.id.Passask);
+
+                //Button to close popup with no pass
+                closePop.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        confirmationpass.dismiss();
+                    }
+                });
+                //Button to close popup with pass
+                passbutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        countDownTimer.cancel();
+                        if (lives > 0 ) {
+                            countDownTimer.start();
+                        }
+                        passminus();
+                        confirmationpass.dismiss();
+                    }
+                });
+                //Showing pop up
+                confirmationpass.getWindow();
+                confirmationpass.show();
+            }
+        });
     }
+
+
     //Runs the Sensor to wait for a shake
     private SensorManager mSensorManager;
     private ShakeEventListener mSensorListener;
@@ -369,39 +330,13 @@ public class Quizmain extends AppCompatActivity {
         super.onPause();
     }
 
-    //Pop up window
-    public void showdialogbox(){
-        confirmationpass.setContentView(R.layout.dialoguebox);
-        closePop = (Button) confirmationpass.findViewById(R.id.closePop);
-        passbutton = (Button) confirmationpass.findViewById(R.id.passbutton);
-        Passask = (TextView) confirmationpass.findViewById(R.id.Passask);
 
-        //Button to close popup with no pass
-        closePop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                confirmationpass.dismiss();
-            }
-        });
-        //Button to close popup with pass
-        passbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                passminus();
 
-                confirmationpass.dismiss();
-            }
-        });
-        //Showing pop up
-        confirmationpass.getWindow();
-        confirmationpass.show();
-    }
 
    //this is called upon when the time runs out. it works similarly to the onclick listeners
    public void timeout(){
 
        lifeminus();
-
 
        TextView nv = findViewById(R.id.displife);
        nv.setText(life());
@@ -416,24 +351,12 @@ public class Quizmain extends AppCompatActivity {
 
 
        Collections.shuffle(Arrays.asList(a));
-
        Collections.shuffle(Arrays.asList(b));
 
-
        tv1.setText(b[0]);
-
-
-
        tv2.setText(b[1]);
-
-
-
        tv3.setText(b[2]);
-
-
-
        tv4.setText(b[3]);
-
 
    }
 
@@ -443,7 +366,6 @@ public class Quizmain extends AppCompatActivity {
 /*this is the method that returns the question string and retrives the correct answer from the same
    string in the sentances vector*/
     public String getquestion() {
-
 
         rand_num = rand.nextInt(MainActivity.sentences.size());
 
@@ -461,10 +383,12 @@ public class Quizmain extends AppCompatActivity {
 
         return quest;
     }
-    //retuns srting value of final answer
+
+    //returns string value of final answer
     public String getans() {
         return final_ans;
     }
+
         /*these retrieve the incorrect answers that are put in random buttons
             they work nearly the same way as the get question function does*/
     public  String getincorrect1(){
@@ -518,26 +442,24 @@ public class Quizmain extends AppCompatActivity {
 
             }
 
+
+
 //these increment and decrement the score and life values respectively
     public  void scoreplus(){
-
         ++score;
-
         new_score = score;
-
 
     }
     public void lifeminus(){
-
         --lives;
         if (lives < 1 ) {
-
             Intent intent = new Intent(this, MainActivity.class);
-
             startActivity(intent);
 
         }
     }
+
+
 
     //these return the life and score values as strings
     public  String life(){
@@ -550,10 +472,13 @@ public class Quizmain extends AppCompatActivity {
         return String.valueOf(score);
        
     }
-    public void passminus(){ // this is the method that will decrement the passes and move to the next question
+
+
+    // this is the method that will decrement the passes and move to the next question
+    public void passminus(){
         --passes;
 
-        TextView nv = findViewById(R.id.displife);
+       TextView nv = findViewById(R.id.displife);
         nv.setText(life());
 
         TextView nv1 = findViewById(R.id.dispscore);
@@ -568,24 +493,13 @@ public class Quizmain extends AppCompatActivity {
 
 
         Collections.shuffle(Arrays.asList(a));
-
         Collections.shuffle(Arrays.asList(b));
 
-
         tv1.setText(b[0]);
-
-
-
         tv2.setText(b[1]);
-
-
-
         tv3.setText(b[2]);
-
-
-
         tv4.setText(b[3]);
-
+        //This stops the shake sensor when all passes have been used
         if (passes < 1 ) {
 
             onPause();
