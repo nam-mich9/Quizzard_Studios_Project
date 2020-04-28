@@ -183,27 +183,6 @@ public class UserQuizMain extends AppCompatActivity {
         }.start();
     }
 
-    /*private void decrementLives()
-    {
-        lives--;
-
-        if (lives < 1)
-        {
-            returnToMainActivity();
-        }
-        else
-        {
-            livesView.setText(Integer.toString(lives));
-            incrementQuestionIndex();
-        }
-    }
-
-    private void incrementScore()
-    {
-        score++;
-        scoreView.setText(Integer.toString(score));
-    }*/
-
     private void chooseAnswer(String chosenAnswer)
     {
         if (isCorrectAnswer(chosenAnswer))
