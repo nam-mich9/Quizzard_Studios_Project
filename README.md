@@ -1,6 +1,6 @@
 # Quizzard_Studios_Project
 
-_Table of contents_
+**Table of contents**
 
 Installation
 Cloning
