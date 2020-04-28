@@ -1,5 +1,6 @@
 package com.example.quizwiz;
 
+//Class to pass to the Adapter for the RecyclerView
 public class ExampleQuiz {
     private String quizName;
     private int quizNumber;

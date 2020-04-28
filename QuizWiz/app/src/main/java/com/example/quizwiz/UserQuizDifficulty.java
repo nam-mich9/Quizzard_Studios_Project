@@ -39,6 +39,7 @@ public class UserQuizDifficulty extends AppCompatActivity {
         });
     }
 
+    //Start the quiz after passing the parameters
     private void openQuiz(int difficulty)
     {
         Intent intent = new Intent(this, UserQuizMain.class);

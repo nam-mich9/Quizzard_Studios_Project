@@ -37,24 +37,10 @@ public class UserQuizMain extends AppCompatActivity {
     int correct = 0;
     int questionIndex = 0;
 
-    Dialog confirmationpass;
-    TextView Passask;
-    Button passbutton, closePop;
-
-    int score = 0;
-    int passes = 3;
-    int lives = 3;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_quiz_main);
-
-        scoreView = findViewById(R.id.score);
-        passesView = findViewById(R.id.passes);
-        livesView = findViewById(R.id.lives);
 
         quiz = loadQuiz(getIntent().getExtras().getInt("quizIndex"));
 
@@ -98,64 +84,7 @@ public class UserQuizMain extends AppCompatActivity {
         });
 
         setupUI();
-
-        //Sensor for shake
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mSensorListener = new ShakeEventListener();
-        //Waits for a shake
-        mSensorListener.setOnShakeListener(new ShakeEventListener.OnShakeListener() {
-            //If there is a shake, a pop-up window will come up
-            public void onShake(){
-                confirmationpass.setContentView(R.layout.dialoguebox);
-                closePop = (Button) confirmationpass.findViewById(R.id.closePop);
-                passbutton = (Button) confirmationpass.findViewById(R.id.passbutton);
-                Passask = (TextView) confirmationpass.findViewById(R.id.Passask);
-
-                //Button to close popup with no pass
-                closePop.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        confirmationpass.dismiss();
-                    }
-                });
-                //Button to close popup with pass
-                passbutton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        countDownTimer.cancel();
-                        if (lives > 0 ) {
-                            countDownTimer.start();
-                        }
-                        confirmationpass.dismiss();
-                    }
-                });
-                //Showing pop up
-                confirmationpass.getWindow();
-                confirmationpass.show();
-            }
-        });
     }
-
-
-
-    //Runs the Sensor to wait for a shake
-    private SensorManager mSensorManager;
-    private ShakeEventListener mSensorListener;
-    //Keeps the sensor going or starts it again after pause
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mSensorManager.registerListener(mSensorListener,
-                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_UI);
-    }
-    //Keeps the sensor on pause
-    @Override
-    protected void onPause() {
-        mSensorManager.unregisterListener(mSensorListener);
-        super.onPause();
-    }
-
 
     //Stops the countdown clock
     @Override
@@ -166,9 +95,7 @@ public class UserQuizMain extends AppCompatActivity {
         stopCountDownTimer();
     }
 
-
-
-    //Loads any previously made quizzes
+    //Loads the saved quiz at this index
     private UserQuiz loadQuiz(int index)
     {
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
@@ -186,22 +113,15 @@ public class UserQuizMain extends AppCompatActivity {
         return savedQuizzes.get(index);
     }
 
-
-
-    //Sets up the layout for custom quiz
+    //Sets up the initial layout for custom quiz
     private void setupUI()
     {
-        scoreView.setText(Integer.toString(score));
-        passesView.setText("Passes: " + Integer.toString(passes));
-        livesView.setText(Integer.toString(lives));
-
         quizName.setText(quiz.getQuizName());
         setTime();
         populateQuestion(questionIndex);
     }
 
-
-    //Allows user to create a custom quiz
+    //Sets up the UI for the question at this index
     private void populateQuestion(int index)
     {
         resetTimer(time);
@@ -217,8 +137,7 @@ public class UserQuizMain extends AppCompatActivity {
         answer4.setText(quizQuestion.getAnswer(4));
     }
 
-
-    //Allows user to choose Difficulty and changes time per question
+    //Sets the time initially based on the passed difficulty
     private void setTime()
     {
         int difficulty = getIntent().getExtras().getInt("difficulty");
@@ -237,8 +156,7 @@ public class UserQuizMain extends AppCompatActivity {
         }
     }
 
-
-    //Resets the Countdown timer
+    //Resets the Countdown timer and initializes a new one
     private void resetTimer(int time)
     {
         stopCountDownTimer();
@@ -254,12 +172,12 @@ public class UserQuizMain extends AppCompatActivity {
             @Override
             public void onFinish()
             {
-                //decrementLives();
                 incrementQuestionIndex();
             }
         }.start();
     }
 
+    //Increments number correct if correct; then moves to next question regardless
     private void chooseAnswer(String chosenAnswer)
     {
         if (isCorrectAnswer(chosenAnswer))
@@ -270,15 +188,13 @@ public class UserQuizMain extends AppCompatActivity {
         incrementQuestionIndex();
     }
 
-
     //Checks to see if the question selected is the correct answer
     private boolean isCorrectAnswer(String chosenAnswer)
     {
         return chosenAnswer.equals(quiz.getQuestion(questionIndex).getCorrectAnswer());
     }
 
-
-    //Goes through question list
+    //Ends quiz if no more questions and displays next question otherwise
     private void incrementQuestionIndex()
     {
         questionIndex++;
@@ -293,7 +209,6 @@ public class UserQuizMain extends AppCompatActivity {
         }
     }
 
-
     //Shows the results of the quiz
     private void openResultsActivity()
     {
@@ -304,13 +219,11 @@ public class UserQuizMain extends AppCompatActivity {
         finish();
     }
 
-
-    //Chooses the current question
+    //Returns the current question
     private UserQuestion getCurrentQuestion()
     {
         return quiz.getQuestion(questionIndex);
     }
-
 
     //Stops the countdown timer
     private void stopCountDownTimer()
@@ -321,11 +234,9 @@ public class UserQuizMain extends AppCompatActivity {
         }
     }
 
-
     //Shows progress
     private void setProgress()
     {
         progress.setText(questionIndex + 1 + "/" + quiz.getNumberOfQuestions());
     }
-
 }

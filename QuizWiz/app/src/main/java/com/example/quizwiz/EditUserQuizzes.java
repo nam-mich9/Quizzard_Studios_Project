@@ -59,6 +59,7 @@ public class EditUserQuizzes extends AppCompatActivity {
         });
     }
 
+    //Open the CreateQuiz activity
     private void openCreateQuiz()
     {
         Intent intent = new Intent(this, CreateQuiz.class);
@@ -66,11 +67,13 @@ public class EditUserQuizzes extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Returns to the Main Menu
     private void returnToMainMenu()
     {
         startActivity(new Intent(this, MainActivity.class));
     }
 
+    //Loads all the quizzes
     private void loadQuizzes()
     {
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
@@ -80,17 +83,20 @@ public class EditUserQuizzes extends AppCompatActivity {
 
         savedQuizzes = gson.fromJson(json, type);
 
+        //Initializes the savedQuizzes with empty if none are saved
         if (savedQuizzes == null)
         {
             savedQuizzes = new ArrayList<UserQuiz>();
         }
 
+        //Adds all the quizzes as elements for the RecyclerView
         for (int i = 0; i < savedQuizzes.size(); i++)
         {
             exampleQuizzes.add(new ExampleQuiz(savedQuizzes.get(i).getQuizName(), i + 1, savedQuizzes.get(i).getNumberOfQuestions()));
         }
     }
 
+    //Removes the Quiz card from the RecyclerView at the given position. Called by the Quiz card that removes itself
     public void removeItem(int position)
     {
         exampleQuizzes.remove(position);

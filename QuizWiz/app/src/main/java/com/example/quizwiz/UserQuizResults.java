@@ -27,6 +27,7 @@ public class UserQuizResults extends AppCompatActivity {
         });
     }
 
+    //Goes back to the main menu
     private void returnToHome()
     {
         startActivity(new Intent(this, MainActivity.class));

@@ -72,6 +72,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             });
         }
 
+        //Opens the CreateQuiz activity, but with parameters to modify quizzes
         private void openUpdateQuizActivity()
         {
             Intent intent = new Intent(context, CreateQuiz.class);
@@ -80,6 +81,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             context.startActivity(intent);
         }
 
+        //Starts the quiz by opening the UserQuizDifficulty activity
         private void startQuiz()
         {
             Intent intent = new Intent(context, UserQuizDifficulty.class);
@@ -87,6 +89,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             context.startActivity(intent);
         }
 
+        //Deletes the saved quiz and removes it from the RecyclerView
         private void deleteQuiz()
         {
             ArrayList<UserQuiz> savedQuizzes = loadSavedQuizzes();
@@ -94,6 +97,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             saveQuizzes(savedQuizzes);
         }
 
+        //Loads all the saved quizzes
         private ArrayList<UserQuiz> loadSavedQuizzes()
         {
             SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences", context.MODE_PRIVATE);
@@ -111,6 +115,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             return savedQuizzes;
         }
 
+        //Save the quizzes
         private void saveQuizzes(ArrayList<UserQuiz> quizzesToSave)
         {
             SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences", context.MODE_PRIVATE);
@@ -121,6 +126,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             editor.apply();
         }
 
+        //Removes the Quiz Card from the RecyclerView
         private void remove()
         {
             ((EditUserQuizzes) context).removeItem(getAdapterPosition());

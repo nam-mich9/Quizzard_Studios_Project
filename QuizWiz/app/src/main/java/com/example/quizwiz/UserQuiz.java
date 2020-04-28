@@ -29,6 +29,7 @@ public class UserQuiz
         this.quizName = quizName;
     }
 
+    //Adds a question to the end of the ArrayList
     public void addQuestion(UserQuestion question)
     {
         questions.add(question);
@@ -39,6 +40,7 @@ public class UserQuiz
         return questions.get(index);
     }
 
+    //Replaces a question with a new question
     public void updateQuestion(int index, UserQuestion newQuestion)
     {
         questions.set(index, newQuestion);
@@ -49,6 +51,7 @@ public class UserQuiz
         return questions.size();
     }
 
+    //Removes a question
     public void deleteQuestion(int index)
     {
         questions.remove(index);
