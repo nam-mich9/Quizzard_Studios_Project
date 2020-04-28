@@ -8,6 +8,7 @@
   1. git init
   2. git clone https://github.com/nam-mich9/Quizzard_Studios_Project.git
   
+  
   * For Desktop
   1. Clone or download tab (green top right)
   2. Open in Desktop
@@ -19,7 +20,11 @@
 
 ## Features of your program
 * **How to run**
+ * Step 1:
 ![Image of Step 1](https://github.com/nam-mich9/Quizzard_Studios_Project/blob/master/Step%201.png)
+
+ * Step 2:
+![Image of Step 2](https://github.com/nam-mich9/Quizzard_Studios_Project/blob/master/Step%202.png)
 
 
 ## Team Name and Contributors
