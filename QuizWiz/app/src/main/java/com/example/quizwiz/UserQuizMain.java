@@ -31,7 +31,6 @@ public class UserQuizMain extends AppCompatActivity {
     TextView timer;
 
     TextView quizName, question, progress;
-    TextView scoreView,passesView,livesView;
     Button answer1, answer2, answer3, answer4;
 
     int correct = 0;
