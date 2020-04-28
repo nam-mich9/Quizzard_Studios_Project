@@ -5,13 +5,13 @@
 ## Installation
 * **Cloning**
   * For Terminal:
-  git init
-  git clone https://github.com/nam-mich9/Quizzard_Studios_Project.git
+  1. git init
+  2. git clone https://github.com/nam-mich9/Quizzard_Studios_Project.git
   
   * For Desktop
-  Clone or download tab (green top right)
-  Open in Desktop
-  Pull origin
+  1. Clone or download tab (green top right)
+  2. Open in Desktop
+  3. Pull origin
 
 * **Setup**
   * Built on macOS Catalina Version 10.15.3
