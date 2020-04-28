@@ -2,8 +2,12 @@ package com.example.quizwiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -15,6 +19,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class UserQuizMain extends AppCompatActivity {
 
@@ -23,42 +29,43 @@ public class UserQuizMain extends AppCompatActivity {
     int time = 0;
     CountDownTimer countDownTimer;
     TextView timer;
-    /*TextView scoreView;
-    TextView passesView;
-    TextView livesView;*/
 
-    TextView quizName;
-    TextView question;
-    TextView progress;
-    Button answer1;
-    Button answer2;
-    Button answer3;
-    Button answer4;
-
-    /*int score = 0;
-    int passes = 3;
-    int lives = 3;*/
+    TextView quizName, question, progress;
+    TextView scoreView,passesView,livesView;
+    Button answer1, answer2, answer3, answer4;
 
     int correct = 0;
-
     int questionIndex = 0;
+
+    Dialog confirmationpass;
+    TextView Passask;
+    Button passbutton, closePop;
+
+    int score = 0;
+    int passes = 3;
+    int lives = 3;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_quiz_main);
 
+        scoreView = findViewById(R.id.score);
+        passesView = findViewById(R.id.passes);
+        livesView = findViewById(R.id.lives);
+
         quiz = loadQuiz(getIntent().getExtras().getInt("quizIndex"));
 
         timer = findViewById(R.id.timer);
-        /*scoreView = findViewById(R.id.score);
-        passesView = findViewById(R.id.passes);
-        livesView = findViewById(R.id.lives);*/
 
         quizName = findViewById(R.id.userQuizName);
         question = findViewById(R.id.question);
         progress = findViewById(R.id.progress);
         answer1 = findViewById(R.id.answerChoice1);
+
+        //This allows you to choose the correct answer amongst the inputted options
         answer1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
@@ -91,8 +98,66 @@ public class UserQuizMain extends AppCompatActivity {
         });
 
         setupUI();
+
+        //Sensor for shake
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mSensorListener = new ShakeEventListener();
+        //Waits for a shake
+        mSensorListener.setOnShakeListener(new ShakeEventListener.OnShakeListener() {
+            //If there is a shake, a pop-up window will come up
+            public void onShake(){
+                confirmationpass.setContentView(R.layout.dialoguebox);
+                closePop = (Button) confirmationpass.findViewById(R.id.closePop);
+                passbutton = (Button) confirmationpass.findViewById(R.id.passbutton);
+                Passask = (TextView) confirmationpass.findViewById(R.id.Passask);
+
+                //Button to close popup with no pass
+                closePop.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        confirmationpass.dismiss();
+                    }
+                });
+                //Button to close popup with pass
+                passbutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        countDownTimer.cancel();
+                        if (lives > 0 ) {
+                            countDownTimer.start();
+                        }
+                        confirmationpass.dismiss();
+                    }
+                });
+                //Showing pop up
+                confirmationpass.getWindow();
+                confirmationpass.show();
+            }
+        });
     }
 
+
+
+    //Runs the Sensor to wait for a shake
+    private SensorManager mSensorManager;
+    private ShakeEventListener mSensorListener;
+    //Keeps the sensor going or starts it again after pause
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mSensorListener,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_UI);
+    }
+    //Keeps the sensor on pause
+    @Override
+    protected void onPause() {
+        mSensorManager.unregisterListener(mSensorListener);
+        super.onPause();
+    }
+
+
+    //Stops the countdown clock
     @Override
     public void onDestroy()
     {
@@ -101,6 +166,9 @@ public class UserQuizMain extends AppCompatActivity {
         stopCountDownTimer();
     }
 
+
+
+    //Loads any previously made quizzes
     private UserQuiz loadQuiz(int index)
     {
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
@@ -118,17 +186,22 @@ public class UserQuizMain extends AppCompatActivity {
         return savedQuizzes.get(index);
     }
 
+
+
+    //Sets up the layout for custom quiz
     private void setupUI()
     {
-        /*scoreView.setText(Integer.toString(score));
+        scoreView.setText(Integer.toString(score));
         passesView.setText("Passes: " + Integer.toString(passes));
-        livesView.setText(Integer.toString(lives));*/
+        livesView.setText(Integer.toString(lives));
 
         quizName.setText(quiz.getQuizName());
         setTime();
         populateQuestion(questionIndex);
     }
 
+
+    //Allows user to create a custom quiz
     private void populateQuestion(int index)
     {
         resetTimer(time);
@@ -144,6 +217,8 @@ public class UserQuizMain extends AppCompatActivity {
         answer4.setText(quizQuestion.getAnswer(4));
     }
 
+
+    //Allows user to choose Difficulty and changes time per question
     private void setTime()
     {
         int difficulty = getIntent().getExtras().getInt("difficulty");
@@ -162,6 +237,8 @@ public class UserQuizMain extends AppCompatActivity {
         }
     }
 
+
+    //Resets the Countdown timer
     private void resetTimer(int time)
     {
         stopCountDownTimer();
@@ -187,22 +264,21 @@ public class UserQuizMain extends AppCompatActivity {
     {
         if (isCorrectAnswer(chosenAnswer))
         {
-            //incrementScore();
             correct++;
         }
-        /*else
-        {
-            decrementLives();
-        }*/
 
         incrementQuestionIndex();
     }
 
+
+    //Checks to see if the question selected is the correct answer
     private boolean isCorrectAnswer(String chosenAnswer)
     {
         return chosenAnswer.equals(quiz.getQuestion(questionIndex).getCorrectAnswer());
     }
 
+
+    //Goes through question list
     private void incrementQuestionIndex()
     {
         questionIndex++;
@@ -217,6 +293,8 @@ public class UserQuizMain extends AppCompatActivity {
         }
     }
 
+
+    //Shows the results of the quiz
     private void openResultsActivity()
     {
         Intent intent = new Intent(this, UserQuizResults.class);
@@ -226,11 +304,15 @@ public class UserQuizMain extends AppCompatActivity {
         finish();
     }
 
+
+    //Chooses the current question
     private UserQuestion getCurrentQuestion()
     {
         return quiz.getQuestion(questionIndex);
     }
 
+
+    //Stops the countdown timer
     private void stopCountDownTimer()
     {
         if (countDownTimer != null)
@@ -239,8 +321,11 @@ public class UserQuizMain extends AppCompatActivity {
         }
     }
 
+
+    //Shows progress
     private void setProgress()
     {
         progress.setText(questionIndex + 1 + "/" + quiz.getNumberOfQuestions());
     }
+
 }
