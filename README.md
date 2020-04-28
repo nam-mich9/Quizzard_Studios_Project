@@ -9,7 +9,7 @@
 ## Setup
 
 * Built on macOS Catalina Version 10.15.3
-* Requires Android Studio, SDK 28, Build tools 29.0.3, Grade 5.6.4
+* Requires Android Studio, SDK 28, Build tools 29.0.3, Gradle 5.6.4
 
 ## Features of your program
 
