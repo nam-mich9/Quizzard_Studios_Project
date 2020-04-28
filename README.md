@@ -1,6 +1,13 @@
 # Quizzard_Studios_Project
 
 ## Table of contents
+ ### Installation
+  #### Cloning
+  #### Set-Up
+ ### Features of Program
+  #### How to Run
+ ### Team Name and Contributers
+
 
 ## Installation
 * **Cloning**
